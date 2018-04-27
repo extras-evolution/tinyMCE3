@@ -1,6 +1,6 @@
 <?php
 // Sorted Link List for TinyMCE
-// v1.0.3
+// v1.0.4
 // By NCrossland
 //
 // Changelog:
@@ -8,6 +8,7 @@
 // 1.0.1: Update to fix broken accented characters (thanks davidm)
 // 1.0.2: Added choice of breadcrumbs or tree-style display (thanks raum). Setting for charset (thanks mmjaeger)
 // 1.0.3: Added a choice of tree indent styles (thanks raum). Added ability to sort by menuindex and improved avoiding showing unpublished documents. 
+// 1.0.4: Get it working with Evo 1.4.x
 //
 // To do:
 // * Based on Modx DB API, rather than raw SQL
@@ -30,23 +31,17 @@ $limit               = 0;
 $recent              = 0;
 
 /* That's it to config! */
-include_once(dirname(__FILE__)."/../../../cache/siteManager.php");
-$tree_styles = array('|--', '&#9494;&nbsp;', '&#9658;&nbsp;', 'L&nbsp;');
+
+define('MODX_BASE_PATH',realpath('../../../../').'/');
+include_once(MODX_BASE_PATH."assets/cache/siteManager.php");
+define('MGR',MODX_BASE_PATH.MGR_DIR);
 define('MODX_API_MODE', true);
-define("IN_MANAGER_MODE", "true");
-$self = 'assets/plugins/tinymce/js/tinymce.linklist.php';
-$base_path = str_replace($self,'',str_replace('\\','/',__FILE__));
-$mtime = microtime();
-$manage_path = '../../../../'.MGR_DIR.'/';
-include($manage_path . 'includes/config.inc.php');
-include(MODX_MANAGER_PATH . 'includes/document.parser.class.inc.php');
-$modx = new DocumentParser;
-$mtime = explode(" ",$mtime);
-$modx->tstart = $mtime[1] + $mtime[0];;
-$modx->mstart = memory_get_usage();
-startCMSSession();
+define('IN_MANAGER_MODE', true);
+include_once (MODX_BASE_PATH . 'index.php');
 $modx->db->connect();
 $modx->getSettings();
+
+$tree_styles = array('|--', '&#9494;&nbsp;', '&#9658;&nbsp;', 'L&nbsp;');
 
 /* only display if manager user is logged in */
 if ($modx->getLoginUserType() !== 'manager')

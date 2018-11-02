@@ -5,12 +5,14 @@ if(!defined('MODX_BASE_PATH')){die('What are you doing? Get out of here!');}
 global $usersettings,$settings;
 
 // Set path and base setting variables
+$mce_path = MODX_BASE_PATH . 'assets/plugins/tinymce/'; 
+$mce_url = MODX_BASE_URL . 'assets/plugins/tinymce/';
 
 $params['mce_path']         = $mce_path;
 $params['mce_url']          = $mce_url;
 
 $plugin_dir = 'tinymce';
-include_once(MODX_BASE_PATH."assets/plugins/tinymce/functions.php");
+include_once("{$mce_path}functions.php");
 
 $mce = new TinyMCE();
 

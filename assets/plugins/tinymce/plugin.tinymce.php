@@ -10,7 +10,7 @@ $params['mce_path']         = $mce_path;
 $params['mce_url']          = $mce_url;
 
 $plugin_dir = 'tinymce';
-include_once("{$mce_path}functions.php");
+include_once(MODX_BASE_PATH."assets/plugins/tinymce/functions.php");
 
 $mce = new TinyMCE();
 
